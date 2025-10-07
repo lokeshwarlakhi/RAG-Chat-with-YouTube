@@ -14,10 +14,10 @@
   - [x] POST ingest_video
   - [x] POST query
   - [ ] implement async await to the api file
-- [ ] Build Steramlit UI
-  - [ ] User gives url -> parse the video code from the url
-  - [ ] when clicked ingest , hit the ingest_video endpoint
-  - [ ] take input query -> retreive and answer the query and display as markdown
-    - [ ] show chat like interface for the user queries
+- [x] Build Steramlit UI
+  - [x] User gives url -> parse the video code from the url
+  - [x] when clicked ingest , hit the ingest_video endpoint
+  - [x] take input query -> retreive and answer the query and display as markdown
+    - [x] show chat like interface for the user queries
 - [ ] Test API locust
 - [ ] evaluate the model using RAGas
