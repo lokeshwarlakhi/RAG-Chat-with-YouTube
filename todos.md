@@ -10,9 +10,9 @@
   - [x] data ingest method
   - [x] Retrieve method
   - [ ] modify the methods to be async methods
-- [ ] Build FastAPI over the pipeline
-  - [ ] POST ingest_video
-  - [ ] POST query
+- [x] Build FastAPI over the pipeline
+  - [x] POST ingest_video
+  - [x] POST query
   - [ ] implement async await to the api file
 - [ ] Build Steramlit UI
   - [ ] User gives url -> parse the video code from the url
