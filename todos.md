@@ -6,9 +6,9 @@
   - [x] build a retriever
   - [x] create a prompt template to give to the LLM
   - [x] implement Langchain over the componenets
-- [ ] Build RAG pipeline file
-  - [ ] data ingest method
-  - [ ] Retrieve method
+- [x] Build RAG pipeline file
+  - [x] data ingest method
+  - [x] Retrieve method
   - [ ] modify the methods to be async methods
 - [ ] Build FastAPI over the pipeline
   - [ ] POST ingest_video
