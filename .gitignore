@@ -5,3 +5,4 @@ __pycache__/
 faiss_index/
 test.py
 test2.py
+improvements.md
