@@ -1,0 +1,23 @@
+- [x] Build a RAG Prototype in Jupyter 
+  - [x] get the transcript from the video code
+  - [x] use text splitter 
+  - [x] use embedding model 
+  - [x] ingest the chunks in the vector store
+  - [x] build a retriever
+  - [x] create a prompt template to give to the LLM
+  - [x] implement Langchain over the componenets
+- [ ] Build RAG pipeline file
+  - [ ] data ingest method
+  - [ ] Retrieve method
+  - [ ] modify the methods to be async methods
+- [ ] Build FastAPI over the pipeline
+  - [ ] POST ingest_video
+  - [ ] POST query
+  - [ ] implement async await to the api file
+- [ ] Build Steramlit UI
+  - [ ] User gives url -> parse the video code from the url
+  - [ ] when clicked ingest , hit the ingest_video endpoint
+  - [ ] take input query -> retreive and answer the query and display as markdown
+    - [ ] show chat like interface for the user queries
+- [ ] Test API locust
+- [ ] evaluate the model using RAGas
