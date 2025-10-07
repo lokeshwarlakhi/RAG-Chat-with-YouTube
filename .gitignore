@@ -1,0 +1,7 @@
+streamlit_app_draft_1.py
+.env
+test.txt
+__pycache__/
+faiss_index/
+test.py
+test2.py
