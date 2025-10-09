@@ -2,7 +2,7 @@ from typing import Union
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
-from rag_pipeline import *
+from backend.rag_pipeline import *
 import os
 
 # use "uvicorn main:app --reload" to run the code.
