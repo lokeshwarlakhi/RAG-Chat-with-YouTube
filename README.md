@@ -3,8 +3,7 @@ This project is a basic RAG based application built to interact with the youtube
 
 <!-- Demo -->
 <div align="center">
-<video src="https://drive.google.com/file/d/1qFzcn6GBEhCjMsR3CEuhEs-3qm8Ji33s/preview" width="730" height="480" allow="autoplay">     Your browser does not support the video tag.
- </video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CW-olrzbFhs?si=0aFETzQ4E_GdcoRJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 ### Motivation
