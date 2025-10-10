@@ -37,7 +37,7 @@ def ingest_video(video_id):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
     vector_store = FAISS.from_documents(chunks, embeddings)
-    vector_store.save_local("faiss_index")
+    vector_store.save_local(f"{video_id}_faiss_index")
     return len(chunks)
 
 def format_docs(relevant_chunks):
