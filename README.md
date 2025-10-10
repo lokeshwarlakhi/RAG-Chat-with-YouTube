@@ -2,8 +2,9 @@
 This project is a basic RAG based application built to interact with the youtube videos you like in chat manner. user can provide the youtube video URL and ask questions from the video, and get a answer that is fully grounded to the video uploaded(URL).
 
 <!-- Demo -->
-<div style="text-align: center;">
-<iframe src="https://drive.google.com/file/d/1qFzcn6GBEhCjMsR3CEuhEs-3qm8Ji33s/preview" width="730" height="480" allow="autoplay"></iframe>
+<div align="center">
+<video src="https://drive.google.com/file/d/1qFzcn6GBEhCjMsR3CEuhEs-3qm8Ji33s/preview" width="730" height="480" allow="autoplay">     Your browser does not support the video tag.
+ </video>
 </div>
 
 ### Motivation
