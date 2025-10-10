@@ -2,7 +2,10 @@
 This project is a basic RAG based application built to interact with the youtube videos you like in chat manner. user can provide the youtube video URL and ask questions from the video, and get a answer that is fully grounded to the video uploaded(URL).
 
 <!-- Demo -->
-media/demo.mov
+<div style="text-align: center;">
+<iframe src="https://drive.google.com/file/d/1qFzcn6GBEhCjMsR3CEuhEs-3qm8Ji33s/preview" width="730" height="480" allow="autoplay"></iframe>
+</div>
+
 ### Motivation
 I've built it to gain a hands-on, practical understanding of how RAG systems work. This project was a journey to explore key concepts such as document ingestion, vector embeddings, similarity search, and prompting large language models (LLMs) to retrieve information from an external knowledge base rather than relying solely on their pre-trained data.
 
