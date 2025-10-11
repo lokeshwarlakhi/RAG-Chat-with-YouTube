@@ -7,6 +7,7 @@ st.title("🎬 RAG Chat with YouTube Video")
 
 API_BASE_URL = "http://127.0.0.1:8000"
 
+
 # --- Initialize session state ---
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
@@ -62,7 +63,8 @@ if st.session_state.video_ingested:
 
         with st.spinner("Thinking..."):
             try:
-                response = requests.post(f"{API_BASE_URL}/query", json={"query": user_query})
+                print("VIDEO ID:",st.session_state.video_id,"!")
+                response = requests.post(f"{API_BASE_URL}/query", json={"video_id":st.session_state.video_id,"query": user_query})
                 response.raise_for_status()
                 answer = response.json().get("answer", "No answer returned.")
             except requests.exceptions.RequestException as e:
