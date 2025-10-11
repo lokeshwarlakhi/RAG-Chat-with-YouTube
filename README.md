@@ -1,5 +1,21 @@
-# 🎥 RAG-Chat-with-YouTube
+<h1> 🎥 RAG-Chat-with-YouTube </h1>
+
 This project is a basic RAG based application built to interact with the youtube videos you like in chat manner. user can provide the youtube video URL and ask questions from the video, and get a answer that is fully grounded to the video uploaded(URL).
+
+<h4> Table of Contents </h4>
+
+- [🎬 Demo](#-demo)
+  - [💡 Motivation](#-motivation)
+- [⚡️ Challenges \& Solutions](#️-challenges--solutions)
+- [🚀 Quick Setup](#-quick-setup)
+  - [1. 📥 clone the repo](#1--clone-the-repo)
+  - [2. 📁 Navigate to project directory](#2--navigate-to-project-directory)
+  - [3. 🔑 Setup API Key](#3--setup-api-key)
+  - [4. 📦 Install dependencies](#4--install-dependencies)
+  - [5. 🔧 Start the backend server](#5--start-the-backend-server)
+  - [6. 🌐 Launch the frontend](#6--launch-the-frontend)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📋 Features](#-features)
 
 ---
 ## 🎬 Demo
