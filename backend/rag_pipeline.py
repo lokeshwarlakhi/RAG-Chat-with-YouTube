@@ -45,10 +45,10 @@ def format_docs(relevant_chunks):
     return context_text
 
 # A function to load data, process it, and create a retriever
-def retrieve_query_answer(query: str):
+def retrieve_query_answer(video_id: str, query: str):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     
-    vector_store = FAISS.load_local("faiss_index", embeddings,allow_dangerous_deserialization=True)
+    vector_store = FAISS.load_local(f"{video_id}_faiss_index", embeddings,allow_dangerous_deserialization=True)
 
     retriever = vector_store.as_retriever(
         search_type="similarity",

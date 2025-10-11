@@ -10,6 +10,7 @@ app = FastAPI(title="RAG chat with Youtube transcript")
 
 
 class QueryRequest(BaseModel):
+   video_id: str
    query: str
 
 class IngestRequest(BaseModel):
@@ -30,7 +31,7 @@ def transcript(req:IngestRequest):
 
 @app.post("/query")
 def query(req:QueryRequest):
-   answer = retrieve_query_answer(req.query)
-   return {"query": req.query, "answer": answer}
+   answer = retrieve_query_answer(req.video_id,req.query)
+   return {"video_id":req.video_id,"query": req.query, "answer": answer}
 
 
