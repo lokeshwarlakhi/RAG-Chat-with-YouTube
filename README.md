@@ -6,6 +6,7 @@ This project is a basic RAG based application built to interact with the youtube
 
 - [🎬 Demo](#-demo)
   - [💡 Motivation](#-motivation)
+- [🛠️ Tech Stack](#️-tech-stack)
 - [⚡️ Challenges \& Solutions](#️-challenges--solutions)
 - [🚀 Quick Setup](#-quick-setup)
   - [1. 📥 clone the repo](#1--clone-the-repo)
@@ -14,7 +15,6 @@ This project is a basic RAG based application built to interact with the youtube
   - [4. 📦 Install dependencies](#4--install-dependencies)
   - [5. 🔧 Start the backend server](#5--start-the-backend-server)
   - [6. 🌐 Launch the frontend](#6--launch-the-frontend)
-- [🛠️ Tech Stack](#️-tech-stack)
 - [📋 Features](#-features)
 
 ---
@@ -27,6 +27,18 @@ This project is a basic RAG based application built to interact with the youtube
 ---
 ### 💡 Motivation
 I've built it to gain a hands-on, practical understanding of how RAG systems work. This project was a journey to explore key concepts such as document ingestion, vector embeddings, similarity search, and prompting large language models (LLMs) to retrieve information from an external knowledge base rather than relying solely on their pre-trained data.
+
+---
+## 🛠️ Tech Stack
+🤖 Tags: `Google Gemini API`, `RAG Architecture`
+
+🌐 Backend: FastAPI, Uvicorn
+
+🎨 Frontend: Streamlit
+
+📊 Vector Store: FAISS
+
+🔍 Embeddings: Google Embeddings
 
 ---
 ## ⚡️ Challenges & Solutions
@@ -61,16 +73,6 @@ uvicorn backend.main:app --reload
 streamlit run frontend/streamlit_app.py
 ```
 ---
-## 🛠️ Tech Stack
-🤖 Tags: Google Gemini API, RAG Architecture
-
-🌐 Backend: FastAPI, Uvicorn
-
-🎨 Frontend: Streamlit
-
-📊 Vector Store: FAISS
-
-🔍 Embeddings: Google Embeddings
 
 ## 📋 Features
 ✅ YouTube video content extraction
