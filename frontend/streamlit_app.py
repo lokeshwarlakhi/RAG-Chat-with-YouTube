@@ -1,7 +1,9 @@
-import streamlit as st
 import requests
+import streamlit as st
 
-st.set_page_config(page_title="RAG Chat with YouTube", page_icon="🎥", layout="centered")
+st.set_page_config(
+    page_title="RAG Chat with YouTube", page_icon="🎥", layout="centered"
+)
 
 st.title("🎬 RAG Chat with YouTube Video")
 
@@ -31,7 +33,9 @@ with st.expander("📥 Ingest YouTube Video", expanded=True):
 
             with st.spinner("Fetching and ingesting video transcripts..."):
                 try:
-                    response = requests.post(f"{API_BASE_URL}/ingest_video", json=ingest_data)
+                    response = requests.post(
+                        f"{API_BASE_URL}/ingest_video", json=ingest_data
+                    )
                     response.raise_for_status()
                     st.session_state.video_id = video_id
                     st.session_state.video_ingested = True
@@ -63,8 +67,11 @@ if st.session_state.video_ingested:
 
         with st.spinner("Thinking..."):
             try:
-                print("VIDEO ID:",st.session_state.video_id,"!")
-                response = requests.post(f"{API_BASE_URL}/query", json={"video_id":st.session_state.video_id,"query": user_query})
+                print("VIDEO ID:", st.session_state.video_id, "!")
+                response = requests.post(
+                    f"{API_BASE_URL}/query",
+                    json={"video_id": st.session_state.video_id, "query": user_query},
+                )
                 response.raise_for_status()
                 answer = response.json().get("answer", "No answer returned.")
             except requests.exceptions.RequestException as e:
