@@ -18,22 +18,22 @@ class IngestRequest(BaseModel):
 
 
 @app.get("/")
-def read_root():
+async def read_root(): #there are no I/O operations in here, so wont make much of a difference in the execution.
     return RedirectResponse("/docs")
 
 
 @app.get("/healthcheck")
-def healthcheck():
+async def healthcheck():
     return {"status": "ok", "message": "RAG backend running fine"}
 
 
 @app.post("/ingest_video")
-def transcript(req: IngestRequest):
+async def transcript(req: IngestRequest):
     result = ingest_video(req.video_id)
     return {"message": "Video ingested successfully", "details": result}
 
 
 @app.post("/query")
-def query(req: QueryRequest):
-    answer = retrieve_query_answer(req.video_id, req.query)
+async def query(req: QueryRequest): # when query() is waiting, new requets can be accepted. 
+    answer = await retrieve_query_answer(req.video_id, req.query)
     return {"video_id": req.video_id, "query": req.query, "answer": answer}

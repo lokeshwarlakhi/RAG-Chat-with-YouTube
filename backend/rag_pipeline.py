@@ -46,7 +46,7 @@ def format_docs(relevant_chunks):
 
 
 # A function to load data, process it, and create a retriever
-def retrieve_query_answer(video_id: str, query: str):
+async def retrieve_query_answer(video_id: str, query: str):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
     vector_store = FAISS.load_local(
@@ -60,7 +60,7 @@ def retrieve_query_answer(video_id: str, query: str):
         },
     )
 
-    relevant_chunks = retriever.invoke(query)
+    relevant_chunks = await retriever.ainvoke(query)
     context = format_docs(relevant_chunks)
 
     prompt_template = PromptTemplate(
