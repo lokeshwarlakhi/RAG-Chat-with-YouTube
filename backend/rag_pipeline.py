@@ -37,7 +37,7 @@ def ingest_video(video_id):
 
     vector_store = FAISS.from_documents(chunks, embeddings)
     vector_store.save_local(f"{video_id}_faiss_index")
-    return len(chunks)
+    return "".join([chunk.page_content for chunk in chunks])
 
 
 def format_docs(relevant_chunks):
