@@ -15,9 +15,6 @@ from langchain_core.runnables import RunnableParallel, RunnablePassthrough, Runn
 # load_dotenv(dotenv_path=env_path)
 load_dotenv()
 
-api_key = os.getenv("GOOGLE_API_KEY")
-print(f"Your Google key is: {api_key}")
-
 
 def ingest_video(video_id):
     ytt_api = YouTubeTranscriptApi()
