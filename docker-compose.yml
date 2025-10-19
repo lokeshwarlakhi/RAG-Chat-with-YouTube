@@ -1,0 +1,35 @@
+name: yt_rag_app
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend/  # Live reload for development
+      - ./requirements.txt:/app/requirements.txt
+    environment:
+      - ENVIRONMENT=development
+      - PYTHONPATH=/backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    env_file:
+      - ./.env
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend:/frontend  # Live reload for development
+      - ./requirements.txt:/frontend/requirements.txt
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_URL=http://backend:8000
