@@ -9,3 +9,5 @@ transcript.txt
 .DS_Store
 media/
 notes*
+frontend/requirements.txt
+backend/requirements.txt
