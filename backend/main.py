@@ -29,11 +29,11 @@ async def healthcheck():
 
 @app.post("/ingest_video")
 async def transcript(req: IngestRequest):
-    result = ingest_video(req.video_id)
+    result = pinecone_ingest(req.video_id)
     return {"message": "Video ingested successfully", "details": result}
 
 
 @app.post("/query")
 async def query(req: QueryRequest): # when query() is waiting, new requets can be accepted. 
-    answer = await retrieve_query_answer(req.video_id, req.query)
+    answer = await retrieve_query_answer(req.query,req.video_id)
     return {"video_id": req.video_id, "query": req.query, "answer": answer}

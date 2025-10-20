@@ -1,22 +1,17 @@
-import os
-import faiss
 from dotenv import load_dotenv
+from pinecone import Pinecone , ServerlessSpec
 from langchain_core.prompts import PromptTemplate
-from langchain_community.vectorstores import FAISS
 from youtube_transcript_api import YouTubeTranscriptApi
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough, RunnableLambda
+import asyncio
 
-
-# env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
-# load_dotenv(dotenv_path=env_path)
 load_dotenv()
 
-
-def ingest_video(video_id):
+def get_transcirpt(video_id):
     ytt_api = YouTubeTranscriptApi()
     fetched_transcript = ytt_api.fetch(video_id, languages=["en", "hi"])
     print(f"Transcript fetched for video id: {video_id}")
@@ -27,37 +22,68 @@ def ingest_video(video_id):
 
     print(f"chunking the text:")
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    chunks = text_splitter.create_documents([transcript])
+    chunks = text_splitter.create_documents([transcript],metadatas=[{"video_id":video_id}])
 
-    # Embedding and storing the data.
+    return chunks
+
+def pinecone_ingest(video_id):
+    chunks = get_transcirpt(video_id)
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    pc_client = Pinecone()
+    pc_index_name = "video-transcript"
+    if pc_index_name not in pc_client.list_indexes().names():
+        pc_client.create_index(
+        name=pc_index_name,
+        dimension=3072,
+        metric='cosine', 
+        spec=ServerlessSpec(cloud='aws', region='us-east-1')
+    ) 
+    pc_index = pc_client.Index(pc_index_name)
+    vectors = []
+    for i,chunk in enumerate(chunks):
+        embedding = embeddings.embed_query(chunk.page_content) 
+        vector = {
+            "id": f"chunk_{i}_{chunk.metadata.get("video_id")}",
+            "values":embedding,
+            "metadata":{
+                "text": chunk.page_content, 
+                "video_id":chunk.metadata.get("video_id"),
+                "chunk_index":i
+            }
+        }
+        vectors.append(vector)
 
-    vector_store = FAISS.from_documents(chunks, embeddings)
-    vector_store.save_local(f"{video_id}_faiss_index")
-    return "".join([chunk.page_content for chunk in chunks])
+    return pc_index.upsert(vectors)
 
 
 def format_docs(relevant_chunks):
-    context_text = "\n\n".join(doc.page_content for doc in relevant_chunks)
+    context_text = "\n\n".join(doc["text"] for doc in relevant_chunks)
     return context_text
 
 
 # A function to load data, process it, and create a retriever
-async def retrieve_query_answer(video_id: str, query: str):
+async def retrieve_query_answer( query: str, video_id: str | None=None):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    query_vector = embeddings.embed_query(query)
+    pc_client = Pinecone()
+    pc_index_name = "video-transcript"
+    pc_index = pc_client.Index(pc_index_name)
 
-    vector_store = FAISS.load_local(
-        f"{video_id}_faiss_index", embeddings, allow_dangerous_deserialization=True
-    )
+    search_with_vector= pc_index.query(
+        vector = query_vector,
+        top_k=4,
+        include_metadata=True,
+        include_values=False
+        )
 
-    retriever = vector_store.as_retriever(
-        search_type="similarity",
-        search_kwargs={
-            "k": 4,
-        },
-    )
-
-    relevant_chunks = await retriever.ainvoke(query)
+    relevant_chunks = []
+    for match in search_with_vector.matches:
+        relevant_chunks.append({
+                "id": match.id,
+                "score": match.score,
+                "text": match.metadata.get("text")
+                })
+        
     context = format_docs(relevant_chunks)
 
     prompt_template = PromptTemplate(
@@ -67,25 +93,17 @@ async def retrieve_query_answer(video_id: str, query: str):
         input_variables=["context", "query"],
     )
 
+    prompt = prompt_template.invoke({"context":context,"query":query})
     llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
-
-    parallel_chain = RunnableParallel(
-        {
-            "context": retriever | RunnableLambda(format_docs),
-            "query": RunnablePassthrough(),
-        }
-    )
-    parser = StrOutputParser()
-    main_chain = parallel_chain | prompt_template | llm | parser
-
-    answer = main_chain.invoke(query)
-
+    answer = llm.invoke(prompt)
     return answer
 
+async def main():
+    video_id = "Pmd6knanPKw"  # Example video ID
+    pinecone_ingest(video_id)
+    query = "What is the true nature of atman?"
+    answer = await retrieve_query_answer(query=query)
+    print(f"Answer: {answer}")
 
 if __name__ == "__main__":
-    video_id = "Pmd6knanPKw"  # Example video ID
-    ingest_video(video_id)
-    query = "What is a binary search tree?"
-    answer = retrieve_query_answer(query)
-    print(f"Answer: {answer}")
+    asyncio.run(main())
