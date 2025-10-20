@@ -1,5 +1,7 @@
 import requests
 import streamlit as st
+from app_config import API_BASE_URL
+
 
 st.set_page_config(
     page_title="RAG Chat with YouTube", page_icon="🎥", layout="centered"
@@ -7,9 +9,8 @@ st.set_page_config(
 
 st.title("🎬 RAG Chat with YouTube Video")
 
-API_BASE_URL = "http://127.0.0.1:8000"
 
-
+st.sidebar.info(f"Backend URL: `{API_BASE_URL}`")
 # --- Initialize session state ---
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
