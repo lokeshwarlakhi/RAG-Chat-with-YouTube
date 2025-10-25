@@ -2,8 +2,8 @@ name: yt_rag_app
 services:
   backend:
     build: 
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
@@ -22,8 +22,8 @@ services:
       - ./.env
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "8501:8501"
     volumes:
